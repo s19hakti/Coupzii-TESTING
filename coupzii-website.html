@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupzii - Your Coupon Wallet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1a1f3a;
+            --teal: #5ce1bf;
+            --purple: #8b7bd8;
+            --light-bg: #f8f9fc;
+            --white: #ffffff;
+            --text-dark: #2d3142;
+            --text-light: #6b7280;
+            --gradient-1: linear-gradient(135deg, #5ce1bf 0%, #8b7bd8 100%);
+            --gradient-2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--teal);
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(92, 225, 191, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--teal);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--teal);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 5% 4rem;
+            background: linear-gradient(135deg, #f8f9fc 0%, #e8ecf7 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(92, 225, 191, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-card-1 {
+            top: 10%;
+            left: 10%;
+            width: 280px;
+            animation-delay: 0s;
+        }
+
+        .floating-card-2 {
+            top: 50%;
+            right: 10%;
+            width: 250px;
+            animation-delay: 2s;
+        }
+
+        .floating-card-3 {
+            bottom: 10%;
+            left: 30%;
+            width: 200px;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            border: 2px solid var(--light-bg);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-1);
+            color: white;
+            border-color: transparent;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--light-bg);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--teal);
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-full:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .dashboard.active {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: white;
+            padding: 2rem;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.05);
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            position: sticky;
+            top: 80px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card h3 {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .stat-card .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .coupon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .coupon-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .coupon-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .coupon-header {
+            padding: 1.5rem;
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .coupon-header h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .coupon-discount {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .coupon-body {
+            padding: 1.5rem;
+        }
+
+        .coupon-code {
+            background: var(--light-bg);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            border: 2px dashed var(--teal);
+        }
+
+        .coupon-expiry {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* AI Assistant */
+        .ai-assistant-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .ai-assistant-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-chat {
+            position: fixed;
+            bottom: 110px;
+            right: 2rem;
+            width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .ai-chat.active {
+            display: flex;
+        }
+
+        .ai-chat-header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .ai-message {
+            background: var(--light-bg);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .ai-chat-input {
+            padding: 1rem;
+            border-top: 1px solid var(--light-bg);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .ai-chat-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid var(--light-bg);
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .ai-chat-input button {
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        /* Marketplace */
+        .marketplace-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--light-bg);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        /* Brand Dashboard */
+        .upload-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .upload-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-tab {
+            flex: 1;
+            padding: 1rem;
+            background: var(--light-bg);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .upload-tab.active {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .toggle-feature {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-switch {
+            width: 60px;
+            height: 30px;
+            background: #ddd;
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--teal);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: left 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            left: 33px;
+        }
+
+        .coming-soon-badge {
+            background: var(--gradient-2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Analytics Charts */
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: var(--light-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .ai-chat {
+                width: calc(100% - 4rem);
+                right: 2rem;
+                left: 2rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Wallet Tabs */
+        .wallet-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .wallet-tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .wallet-tab.active {
+            color: var(--teal);
+            border-bottom-color: var(--teal);
+        }
+
+        .wallet-content {
+            display: none;
+        }
+
+        .wallet-content.active {
+            display: block;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 3px dashed var(--teal);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            background: rgba(92, 225, 191, 0.05);
+        }
+
+        .upload-area input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="/mnt/user-data/uploads/a-logo-design-featuring-the-text-coupzii_KwEevF0GStaWvY0B1B7Sng_ECscSp9pR7Wjak9oGwFlSA.jpg" alt="Coupzii Logo" class="logo-img">
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="#features">Features</a>
+            <a href="#marketplace">Marketplace</a>
+            <a href="#about">About</a>
+            <button class="btn-primary" onclick="openLoginModal()">Get Started</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="homepage">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Your Coupons.<br>One Wallet.<br>Infinite Savings.</h1>
+                <p>Coupzii is the ultimate coupon wallet that secures all your coupons in one place. Buy, sell, exchange, and manage coupons with AI-powered assistance.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="openLoginModal()">Start Saving Now</button>
+                    <button class="btn-secondary" onclick="scrollToFeatures()">Learn More</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card floating-card-1">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 12px; color: white; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.25rem;">ZARA</h3>
+                        <p style="font-size: 2rem; font-weight: 800;">50% OFF</p>
+                    </div>
+                    <p style="font-family: 'Space Mono', monospace; font-weight: 700;">ZARA50DEAL</p>
+                </div>
+                <div class="floating-card floating-card-2">
+                    <div style="background: linear-gradient(135deg, #5ce1bf 0%, #8b7bd8 100%); padding: 1rem; border-radius: 12px; color: white; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.25rem;">Amazon</h3>
+                        <p style="font-size: 2rem; font-weight: 800;">₹500 OFF</p>
+                    </div>
+                    <p style="font-family: 'Space Mono', monospace; font-weight: 700;">AMZN500</p>
+                </div>
+                <div class="floating-card floating-card-3">
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 1rem; border-radius: 12px; color: white; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1rem;">Flipkart</h3>
+                        <p style="font-size: 1.5rem; font-weight: 800;">30% OFF</p>
+                    </div>
+                    <p style="font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.9rem;">FLIP30</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Everything You Need</h2>
+            <p>Manage, trade, and maximize your coupon savings</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎫</div>
+                <h3>Unified Wallet</h3>
+                <p>Store all your coupons from different apps and platforms in one secure digital wallet. Never lose a coupon again.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛒</div>
+                <h3>Dual Marketplace</h3>
+                <p>Buy coupons directly from brands or trade with other users. Get the best deals from both official and peer-to-peer markets.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Assistant</h3>
+                <p>Your personal AI shopping assistant analyzes your cart and recommends the best coupons to maximize savings.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Exchange & Sell</h3>
+                <p>List coupons you don't need or exchange them with contacts on Coupzii. Turn unused coupons into value.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>Smart Notifications</h3>
+                <p>Get alerts for expiring coupons and never miss out on a deal. Stay on top of your savings game.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Analytics Dashboard</h3>
+                <p>For brands: Track coupon performance with detailed analytics, graphs, and downloadable reports.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeLoginModal()">×</button>
+            <div class="modal-header">
+                <h2>Welcome to Coupzii</h2>
+                <p>Choose your account type</p>
+            </div>
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchLoginTab('user')">User Login</button>
+                <button class="tab-btn" onclick="switchLoginTab('brand')">Brand Login</button>
+            </div>
+            
+            <!-- User Login Form -->
+            <form id="userLoginForm" class="login-form">
+                <div class="form-group">
+                    <label>Email or Phone</label>
+                    <input type="text" id="userEmail" placeholder="Enter your email or phone number" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="userPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-full">Login as User</button>
+                <p style="text-align: center; margin-top: 1rem; color: var(--text-light);">
+                    Don't have an account? <a href="#" style="color: var(--teal); text-decoration: none; font-weight: 600;" onclick="showSignup('user')">Sign up</a>
+                </p>
+            </form>
+
+            <!-- Brand Login Form -->
+            <form id="brandLoginForm" class="login-form hidden">
+                <div class="form-group">
+                    <label>Brand Email</label>
+                    <input type="email" id="brandEmail" placeholder="Enter brand email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="brandPassword" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label>Department (Optional)</label>
+                    <select style="width: 100%; padding: 1rem; border: 2px solid var(--light-bg); border-radius: 12px; font-family: 'Outfit', sans-serif;">
+                        <option value="">Select Department</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="sales">Sales</option>
+                        <option value="analytics">Analytics</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-full">Login as Brand</button>
+                <p style="text-align: center; margin-top: 1rem; color: var(--text-light);">
+                    New brand? <a href="#" style="color: var(--teal); text-decoration: none; font-weight: 600;" onclick="showSignup('brand')">Register</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Dashboard -->
+    <div class="dashboard" id="userDashboard">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" onclick="showDashboardSection('my-wallet')">🎫 My Wallet</a></li>
+                <li><a href="#" onclick="showDashboardSection('marketplace')">🛒 Marketplace</a></li>
+                <li><a href="#" onclick="showDashboardSection('brand-marketplace')">🏪 Brand Marketplace</a></li>
+                <li><a href="#" onclick="showDashboardSection('my-listings')">📋 My Listings</a></li>
+                <li><a href="#" onclick="showDashboardSection('exchanges')">🔄 Exchanges</a></li>
+                <li><a href="#" onclick="showDashboardSection('settings')">⚙️ Settings</a></li>
+                <li><a href="#" onclick="logout()">🚪 Logout</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <!-- My Wallet Section -->
+            <div id="my-wallet" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1>My Wallet</h1>
+                    <button class="btn-primary" onclick="showUploadCouponModal()">+ Add Coupon</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Coupons</h3>
+                        <div class="stat-value">24</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Coupons</h3>
+                        <div class="stat-value">18</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Expiring Soon</h3>
+                        <div class="stat-value" style="color: #f5576c;">5</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Savings</h3>
+                        <div class="stat-value">₹12,450</div>
+                    </div>
+                </div>
+
+                <!-- Auto Sync Toggle -->
+                <div class="toggle-feature">
+                    <div>
+                        <h3 style="margin-bottom: 0.5rem;">Auto Sync Coupons</h3>
+                        <p style="color: var(--text-light); font-size: 0.9rem;">Automatically sync coupons from your apps</p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span class="coming-soon-badge">Coming Soon</span>
+                        <div class="toggle-switch"></div>
+                    </div>
+                </div>
+
+                <div class="wallet-tabs">
+                    <button class="wallet-tab active" onclick="showWalletTab('synced')">Synced Coupons</button>
+                    <button class="wallet-tab" onclick="showWalletTab('purchased')">Purchased</button>
+                    <button class="wallet-tab" onclick="showWalletTab('sold')">Sold</button>
+                </div>
+
+                <div id="synced-tab" class="wallet-content active">
+                    <div class="coupon-grid">
+                        <div class="coupon-card">
+                            <div class="coupon-header">
+                                <h3>ZARA</h3>
+                                <div class="coupon-discount">50% OFF</div>
+                            </div>
+                            <div class="coupon-body">
+                                <div class="coupon-code">ZARA50DEAL</div>
+                                <p class="coupon-expiry">⏰ Expires in 5 days</p>
+                                <p style="margin-top: 0.5rem;">On orders above ₹2,999</p>
+                                <button class="btn-primary" style="margin-top: 1rem; width: 100%;">Use Coupon</button>
+                            </div>
+                        </div>
+
+                        <div class="coupon-card">
+                            <div class="coupon-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <h3>Amazon</h3>
+                                <div class="coupon-discount">₹500 OFF</div>
+                            </div>
+                            <div class="coupon-body">
+                                <div class="coupon-code">AMZN500</div>
+                                <p class="coupon-expiry">⏰ Expires in 12 days</p>
+                                <p style="margin-top: 0.5rem;">On electronics ₹10,000+</p>
+                                <button class="btn-primary" style="margin-top: 1rem; width: 100%;">Use Coupon</button>
+                            </div>
+                        </div>
+
+                        <div class="coupon-card">
+                            <div class="coupon-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <h3>Flipkart</h3>
+                                <div class="coupon-discount">30% OFF</div>
+                            </div>
+                            <div class="coupon-body">
+                                <div class="coupon-code">FLIP30</div>
+                                <p class="coupon-expiry">⏰ Expires in 3 days</p>
+                                <p style="margin-top: 0.5rem;">On fashion items</p>
+                                <button class="btn-primary" style="margin-top: 1rem; width: 100%;">Use Coupon</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="purchased-tab" class="wallet-content">
+                    <p style="text-align: center; color: var(--text-light); padding: 3rem;">No purchased coupons yet. Visit the marketplace to buy coupons!</p>
+                </div>
+
+                <div id="sold-tab" class="wallet-content">
+                    <p style="text-align: center; color: var(--text-light); padding: 3rem;">You haven't sold any coupons yet. List your unused coupons in the marketplace!</p>
+                </div>
+            </div>
+
+            <!-- Marketplace Section -->
+            <div id="marketplace" class="dashboard-section hidden">
+                <div class="dashboard-header">
+                    <h1>User Marketplace</h1>
+                    <p style="color: var(--text-light);">Buy and exchange coupons from other users</p>
+                </div>
+
+                <div class="marketplace-filters">
+                    <button class="filter-btn active">All Categories</button>
+                    <button class="filter-btn">Fashion</button>
+                    <button class="filter-btn">Electronics</button>
+                    <button class="filter-btn">Food & Dining</button>
+                    <button class="filter-btn">Travel</button>
+                    <button class="filter-btn">Beauty</button>
+                </div>
+
+                <div class="coupon-grid">
+                    <div class="coupon-card">
+                        <div class="coupon-header">
+                            <h3>Nike Shoes</h3>
+                            <div class="coupon-discount">40% OFF</div>
+                        </div>
+                        <div class="coupon-body">
+                            <div class="coupon-code">NIKE40RUN</div>
+                            <p class="coupon-expiry">⏰ Expires in 10 days</p>
+                            <p style="margin-top: 0.5rem;">Listed by: @john_doe</p>
+                            <p style="font-weight: 700; margin-top: 0.5rem;">Price: ₹250</p>
+                            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                                <button class="btn-primary" style="flex: 1;">Buy Now</button>
+                                <button class="btn-secondary" style="flex: 1;">Exchange</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="coupon-card">
+                        <div class="coupon-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <h3>Starbucks</h3>
+                            <div class="coupon-discount">Buy 1 Get 1</div>
+                        </div>
+                        <div class="coupon-body">
+                            <div class="coupon-code">SBUX2FOR1</div>
+                            <p class="coupon-expiry">⏰ Expires in 7 days</p>
+                            <p style="margin-top: 0.5rem;">Listed by: @coffee_lover</p>
+                            <p style="font-weight: 700; margin-top: 0.5rem;">Price: ₹150</p>
+                            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                                <button class="btn-primary" style="flex: 1;">Buy Now</button>
+                                <button class="btn-secondary" style="flex: 1;">Exchange</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand Marketplace Section -->
+            <div id="brand-marketplace" class="dashboard-section hidden">
+                <div class="dashboard-header">
+                    <h1>Brand Marketplace</h1>
+                    <p style="color: var(--text-light);">Buy coupons directly from official brands</p>
+                </div>
+
+                <div class="marketplace-filters">
+                    <button class="filter-btn active">All Brands</button>
+                    <button class="filter-btn">Featured</button>
+                    <button class="filter-btn">Trending</button>
+                    <button class="filter-btn">New Arrivals</button>
+                </div>
+
+                <div class="coupon-grid">
+                    <div class="coupon-card">
+                        <div class="coupon-header">
+                            <h3>H&M Official</h3>
+                            <div class="coupon-discount">60% OFF</div>
+                        </div>
+                        <div class="coupon-body">
+                            <div class="coupon-code">HM60FLASH</div>
+                            <p class="coupon-expiry">⏰ Expires in 15 days</p>
+                            <p style="margin-top: 0.5rem;">Official Brand Coupon</p>
+                            <p style="font-weight: 700; margin-top: 0.5rem;">Price: ₹299</p>
+                            <button class="btn-primary" style="margin-top: 1rem; width: 100%;">Buy from Brand</button>
+                        </div>
+                    </div>
+
+                    <div class="coupon-card">
+                        <div class="coupon-header" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                            <h3>Samsung Official</h3>
+                            <div class="coupon-discount">₹5,000 OFF</div>
+                        </div>
+                        <div class="coupon-body">
+                            <div class="coupon-code">SAMSUNG5K</div>
+                            <p class="coupon-expiry">⏰ Expires in 20 days</p>
+                            <p style="margin-top: 0.5rem;">Official Brand Coupon</p>
+                            <p style="font-weight: 700; margin-top: 0.5rem;">Price: ₹499</p>
+                            <button class="btn-primary" style="margin-top: 1rem; width: 100%;">Buy from Brand</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other sections (My Listings, Exchanges, Settings) -->
+            <div id="my-listings" class="dashboard-section hidden">
+                <div class="dashboard-header">
+                    <h1>My Listings</h1>
+                    <button class="btn-primary">+ List New Coupon</button>
+                </div>
+                <p style="text-align: center; color: var(--text-light); padding: 3rem;">You haven't listed any coupons for sale yet.</p>
+            </div>
+
+            <div id="exchanges" class="dashboard-section hidden">
+                <div class="dashboard-header">
+                    <h1>Exchanges</h1>
+                </div>
+                <p style="text-align: center; color: var(--text-light); padding: 3rem;">No active exchanges. Connect with other users to exchange coupons!</p>
+            </div>
+
+            <div id="settings" class="dashboard-section hidden">
+                <div class="dashboard-header">
+                    <h1>Settings & Permissions</h1>
+                </div>
+                <div class="upload-section">
+                    <h3 style="margin-bottom: 1.5rem;">App Permissions</h3>
+                    
+                    <div class="toggle-feature">
+                        <div>
+                            <h4>Camera Access</h4>
+                            <p style="color: var(--text-light); font-size: 0.9rem;">For scanning coupon screenshots</p>
+                        </div>
+                        <div class="toggle-switch active"></div>
+                    </div>
+
+                    <div class="toggle-feature">
+                        <div>
+                            <h4>Microphone Access</h4>
+                            <p style="color: var(--text-light); font-size: 0.9rem;">For AI voice assistant</p>
+                        </div>
+                        <div class="toggle-switch active"></div>
+                    </div>
+
+                    <div class="toggle-feature">
+                        <div>
+                            <h4>Contacts Access</h4>
+                            <p style="color: var(--text-light); font-size: 0.9rem;">To exchange coupons with friends</p>
+                        </div>
+                        <div class="toggle-switch active"></div>
+                    </div>
+
+                    <div class="toggle-feature">
+                        <div>
+                            <h4>Screen Overlay</h4>
+                            <p style="color: var(--text-light); font-size: 0.9rem;">For AI assistant to analyze your cart</p>
+                        </div>
+                        <div class="toggle-switch active"></div>
+                    </div>
+
+                    <div class="toggle-feature">
+                        <div>
+                            <h4>Notifications</h4>
+                            <p style="color: var(--text-light); font-size: 0.9rem;">Get alerts for expiring coupons</p>
+                        </div>
+                        <div class="toggle-switch active"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Brand Dashboard -->
+    <div class="dashboard" id="brandDashboard">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active" onclick="showBrandSection('upload-coupons')">📤 Upload Coupons</a></li>
+                <li><a href="#" onclick="showBrandSection('coupon-tracking')">📊 Coupon Tracking</a></li>
+                <li><a href="#" onclick="showBrandSection('analytics')">📈 Analytics</a></li>
+                <li><a href="#" onclick="showBrandSection('performance')">🎯 Performance</a></li>
+                <li><a href="#" onclick="showBrandSection('departments')">👥 Departments</a></li>
+                <li><a href="#" onclick="logout()">🚪 Logout</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <!-- Upload Coupons Section -->
+            <div id="upload-coupons" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1>Upload Coupons</h1>
+                    <p style="color: var(--text-light);">Create and manage your brand's coupons</p>
+                </div>
+
+                <div class="upload-section">
+                    <div class="upload-tabs">
+                        <button class="upload-tab active" onclick="showUploadTab('single')">Single Coupon</button>
+                        <button class="upload-tab" onclick="showUploadTab('bulk')">Bulk Upload</button>
+                        <button class="upload-tab" onclick="showUploadTab('limited')">Limited Time Offer</button>
+                    </div>
+
+                    <!-- Single Upload Form -->
+                    <div id="single-upload" class="upload-content">
+                        <form>
+                            <div class="form-group">
+                                <label>Coupon Title</label>
+                                <input type="text" placeholder="e.g., Summer Sale 50% OFF">
+                            </div>
+                            <div class="form-group">
+                                <label>Discount Type</label>
+                                <select style="width: 100%; padding: 1rem; border: 2px solid var(--light-bg); border-radius: 12px; font-family: 'Outfit', sans-serif;">
+                                    <option>Percentage Off</option>
+                                    <option>Fixed Amount Off</option>
+                                    <option>Buy X Get Y</option>
+                                    <option>Free Shipping</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Discount Value</label>
+                                <input type="number" placeholder="e.g., 50">
+                            </div>
+                            <div class="form-group">
+                                <label>Coupon Code</label>
+                                <input type="text" placeholder="e.g., SUMMER50">
+                            </div>
+                            <div class="form-group">
+                                <label>Minimum Order Value</label>
+                                <input type="number" placeholder="e.g., 2999">
+                            </div>
+                            <div class="form-group">
+                                <label>Valid From</label>
+                                <input type="date">
+                            </div>
+                            <div class="form-group">
+                                <label>Valid Until</label>
+                                <input type="date">
+                            </div>
+                            <div class="form-group">
+                                <label>Product Category</label>
+                                <input type="text" placeholder="e.g., Fashion, Electronics">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea style="width: 100%; padding: 1rem; border: 2px solid var(--light-bg); border-radius: 12px; font-family: 'Outfit', sans-serif; min-height: 100px;" placeholder="Add coupon details and terms..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-full">Create Coupon</button>
+                        </form>
+                    </div>
+
+                    <!-- Bulk Upload -->
+                    <div id="bulk-upload" class="upload-content hidden">
+                        <div class="upload-area" onclick="document.getElementById('bulkFile').click()">
+                            <input type="file" id="bulkFile" accept=".csv,.xlsx">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                            <h3>Upload CSV or Excel File</h3>
+                            <p style="color: var(--text-light); margin-top: 0.5rem;">Drag and drop or click to browse</p>
+                            <button class="btn-secondary" style="margin-top: 1rem;">Download Template</button>
+                        </div>
+                    </div>
+
+                    <!-- Limited Time -->
+                    <div id="limited-upload" class="upload-content hidden">
+                        <form>
+                            <div class="form-group">
+                                <label>Flash Sale Name</label>
+                                <input type="text" placeholder="e.g., Black Friday Deal">
+                            </div>
+                            <div class="form-group">
+                                <label>Duration (Hours)</label>
+                                <input type="number" placeholder="e.g., 24">
+                            </div>
+                            <div class="form-group">
+                                <label>Stock Limit</label>
+                                <input type="number" placeholder="e.g., 1000">
+                            </div>
+                            <div class="form-group">
+                                <label>Countdown Timer</label>
+                                <div class="toggle-switch active"></div>
+                            </div>
+                            <button type="submit" class="btn-full">Create Limited Offer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coupon Tracking Section -->
+            <div id="coupon-tracking" class="dashboard-section hidden">
+                <div class="dashboard-header">
+                    <h1>Coupon Tracking</h1>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Coupons</h3>
+                        <div class="stat-value">156</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Coupons</h3>
+                        <div class="stat-value">89</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Redeemed Today</h3>
+                        <div class="stat-value">234</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Revenue</h3>
+                        <div class="stat-value">₹4.5L</div>
+                    </div>
+                </div>
+
+                <div class="upload-section">
+                    <h3 style="margin-bottom: 1rem;">Product-wise Performance</h3>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: var(--light-bg);">
+                                    <th style="padding: 1rem; text-align: left;">Product</th>
+                                    <th style="padding: 1rem; text-align: left;">Coupons</th>
+                                    <th style="padding: 1rem; text-align: left;">Redeemed</th>
+                                    <th style="padding: 1rem; text-align: left;">Revenue</th>
+                                    <th style="padding: 1rem; text-align: left;">Performance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--light-bg);">
+                                    <td style="padding: 1rem;">Summer Collection</td>
+                                    <td style="padding: 1rem;">45</td>
+                                    <td style="padding: 1rem;">1,234</td>
+                                    <td style="padding: 1rem;">₹1.2L</td>
+                                    <td style="padding: 1rem;"><span style="color: #10b981; font-weight: 600;">Excellent</span></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--light-bg);">
+                                    <td style="padding: 1rem;">Winter Collection</td>
+                                    <td style="padding: 1rem;">32</td>
+                                    <td style="padding: 1rem;">856</td>
+                                    <td style="padding: 1rem;">₹85K</td>
+                                    <td style="padding: 1rem;"><span style="color: #f59e0b; font-weight: 600;">Good</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 1rem;">Accessories</td>
+                                    <td style="padding: 1rem;">12</td>
+                                    <td style="padding: 1rem;">234</td>
+                                    <td style="padding: 1rem;">₹23K</td>
+                                    <td style="padding: 1rem;"><span style="color: #6b7280; font-weight: 600;">Average</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analytics" class="dashboard-section hidden">
+                <div class="dashboard-header">
+                    <h1>Analytics & Insights</h1>
+                    <button class="btn-primary">📥 Download Report (Excel)</button>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem;">Redemption Trends</h3>
+                    <div class="chart-placeholder">
+                        <p>📊 Interactive Line Chart - Coupon Redemptions Over Time</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div class="chart-container">
+                        <h3 style="margin-bottom: 1rem;">Category Distribution</h3>
+                        <div class="chart-placeholder">
+                            <p>🥧 Pie Chart - Coupons by Category</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 style="margin-bottom: 1rem;">Top Performing Coupons</h3>
+                        <div class="chart-placeholder">
+                            <p>📊 Bar Chart - Top 10 Coupons by Revenue</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem;">Geographical Performance</h3>
+                    <div class="chart-placeholder">
+                        <p>🗺️ Heat Map - Redemptions by Region</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Section -->
+            <div id="performance" class="dashboard-section hidden">
+                <div class="dashboard-header">
+                    <h1>Performance Analysis</h1>
+                </div>
+
+                <div class="upload-section">
+                    <h3 style="margin-bottom: 1.5rem;">Expired Coupons Analysis</h3>
+                    <p style="color: var(--text-light); margin-bottom: 1rem;">View performance data for all coupons including expired ones</p>
+                    
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: var(--light-bg);">
+                                    <th style="padding: 1rem; text-align: left;">Coupon Code</th>
+                                    <th style="padding: 1rem; text-align: left;">Status</th>
+                                    <th style="padding: 1rem; text-align: left;">Created</th>
+                                    <th style="padding: 1rem; text-align: left;">Expired</th>
+                                    <th style="padding: 1rem; text-align: left;">Total Redeemed</th>
+                                    <th style="padding: 1rem; text-align: left;">Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--light-bg);">
+                                    <td style="padding: 1rem;">SUMMER50</td>
+                                    <td style="padding: 1rem;"><span style="background: #fee2e2; color: #dc2626; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">Expired</span></td>
+                                    <td style="padding: 1rem;">01 Jun 2025</td>
+                                    <td style="padding: 1rem;">31 Aug 2025</td>
+                                    <td style="padding: 1rem;">2,456</td>
+                                    <td style="padding: 1rem;">₹2.4L</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--light-bg);">
+                                    <td style="padding: 1rem;">FLASH30</td>
+                                    <td style="padding: 1rem;"><span style="background: #dcfce7; color: #16a34a; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.85rem;">Active</span></td>
+                                    <td style="padding: 1rem;">01 Feb 2026</td>
+                                    <td style="padding: 1rem;">28 Feb 2026</td>
+                                    <td style="padding: 1rem;">567</td>
+                                    <td style="padding: 1rem;">₹56K</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Departments Section -->
+            <div id="departments" class="dashboard-section hidden">
+                <div class="dashboard-header">
+                    <h1>Department Management</h1>
+                    <button class="btn-primary">+ Add Department</button>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Marketing Team</h3>
+                        <p style="margin: 1rem 0;">Access: Coupon Creation, Analytics</p>
+                        <p style="color: var(--text-light);">5 Members</p>
+                        <button class="btn-secondary" style="margin-top: 1rem;">Manage Access</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Sales Team</h3>
+                        <p style="margin: 1rem 0;">Access: Tracking, Performance</p>
+                        <p style="color: var(--text-light);">8 Members</p>
+                        <button class="btn-secondary" style="margin-top: 1rem;">Manage Access</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Analytics Team</h3>
+                        <p style="margin: 1rem 0;">Access: Full Analytics, Reports</p>
+                        <p style="color: var(--text-light);">3 Members</p>
+                        <button class="btn-secondary" style="margin-top: 1rem;">Manage Access</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Assistant -->
+    <button class="ai-assistant-btn" onclick="toggleAIChat()">🤖</button>
+    <div class="ai-chat" id="aiChat">
+        <div class="ai-chat-header">
+            <h3>AI Assistant</h3>
+            <p style="font-size: 0.9rem; opacity: 0.9;">Your personal shopping companion</p>
+        </div>
+        <div class="ai-chat-messages" id="aiMessages">
+            <div class="ai-message">
+                <p><strong>AI:</strong> Hello! I'm your Coupzii AI Assistant. I can help you find the best coupons for your shopping. Try saying "Find ZARA coupons" or "What's the best deal for my cart?"</p>
+            </div>
+        </div>
+        <div class="ai-chat-input">
+            <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="handleAIEnter(event)">
+            <button onclick="sendAIMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Login Modal Functions
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('active');
+        }
+
+        function switchLoginTab(type) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const forms = document.querySelectorAll('.login-form');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            forms.forEach(form => form.classList.add('hidden'));
+            
+            if (type === 'user') {
+                tabs[0].classList.add('active');
+                document.getElementById('userLoginForm').classList.remove('hidden');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('brandLoginForm').classList.remove('hidden');
+            }
+        }
+
+        // Handle Login Submissions
+        document.getElementById('userLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            closeLoginModal();
+            document.getElementById('homepage').style.display = 'none';
+            document.querySelector('.features').style.display = 'none';
+            document.getElementById('userDashboard').classList.add('active');
+            document.getElementById('navLinks').style.display = 'none';
+        });
+
+        document.getElementById('brandLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            closeLoginModal();
+            document.getElementById('homepage').style.display = 'none';
+            document.querySelector('.features').style.display = 'none';
+            document.getElementById('brandDashboard').classList.add('active');
+            document.getElementById('navLinks').style.display = 'none';
+        });
+
+        // Dashboard Navigation
+        function showDashboardSection(sectionId) {
+            const sections = document.querySelectorAll('.dashboard-section');
+            sections.forEach(section => section.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            const links = document.querySelectorAll('.sidebar-menu a');
+            links.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function showBrandSection(sectionId) {
+            const sections = document.querySelectorAll('#brandDashboard .dashboard-section');
+            sections.forEach(section => section.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            const links = document.querySelectorAll('#brandDashboard .sidebar-menu a');
+            links.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Wallet Tabs
+        function showWalletTab(tabName) {
+            const tabs = document.querySelectorAll('.wallet-tab');
+            const contents = document.querySelectorAll('.wallet-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        // Upload Tabs
+        function showUploadTab(tabName) {
+            const tabs = document.querySelectorAll('.upload-tab');
+            const contents = document.querySelectorAll('.upload-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.add('hidden'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-upload').classList.remove('hidden');
+        }
+
+        // AI Assistant
+        function toggleAIChat() {
+            const chat = document.getElementById('aiChat');
+            chat.classList.toggle('active');
+        }
+
+        function handleAIEnter(e) {
+            if (e.key === 'Enter') {
+                sendAIMessage();
+            }
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                const messagesDiv = document.getElementById('aiMessages');
+                
+                // User message
+                const userMsg = document.createElement('div');
+                userMsg.className = 'ai-message';
+                userMsg.innerHTML = `<p><strong>You:</strong> ${message}</p>`;
+                messagesDiv.appendChild(userMsg);
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const aiMsg = document.createElement('div');
+                    aiMsg.className = 'ai-message';
+                    
+                    let response = '';
+                    if (message.toLowerCase().includes('zara')) {
+                        response = 'I found 2 ZARA coupons in your wallet! The best one is 50% OFF (ZARA50DEAL) valid for orders above ₹2,999. Would you like to use this coupon?';
+                    } else if (message.toLowerCase().includes('cart')) {
+                        response = 'I can see your cart has items worth ₹3,500. I recommend using the ZARA50DEAL coupon which will save you ₹1,750! Your final amount will be ₹1,750.';
+                    } else {
+                        response = 'I\'m here to help you find the best coupons! Try asking me about specific brands or let me analyze your shopping cart.';
+                    }
+                    
+                    aiMsg.innerHTML = `<p><strong>AI:</strong> ${response}</p>`;
+                    messagesDiv.appendChild(aiMsg);
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                }, 1000);
+                
+                input.value = '';
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+        }
+
+        // Toggle switches
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                if (!this.parentElement.querySelector('.coming-soon-badge')) {
+                    this.classList.toggle('active');
+                }
+            });
+        });
+
+        // Logout
+        function logout() {
+            document.getElementById('userDashboard').classList.remove('active');
+            document.getElementById('brandDashboard').classList.remove('active');
+            document.getElementById('homepage').style.display = 'block';
+            document.querySelector('.features').style.display = 'block';
+            document.getElementById('navLinks').style.display = 'flex';
+        }
+
+        // Smooth scroll
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
